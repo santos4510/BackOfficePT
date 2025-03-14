@@ -15,6 +15,11 @@ class checkidade
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if ($request->has('check') && $request->input('check') <= 20) {
+            // Redireciona para a rota 'home' — supondo que esta rota existe
+            return redirect()->route('home');
+        }
+
         return $next($request);
     }
 }
