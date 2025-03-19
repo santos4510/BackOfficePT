@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\checkidade;
@@ -14,7 +16,8 @@ Route::get('/home', function () {
 })->name('home');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $users = User::all();
+    return view('dashboard', compact('users'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -24,5 +27,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/contacto', [ContactoController::class, 'index'])->middleware(checkidade::class);
+Route::get('/about', [AboutController::class, 'index'])->middleware(checkidade::class);
 
 require __DIR__.'/auth.php';
